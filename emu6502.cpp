@@ -51,10 +51,9 @@ void emu6502::execute() {
 	// execute next instruction
 
 	++reg_PC; // this is probably wrong, temporary for now
-	byte instr = read(reg_PC);
+	Opcode opcode = read(reg_PC);
 	byte memory;
-	//Mode mode = get_mode(instr);
-	byte mode = 0x00;
+	Mode mode = get_mode(opcode);
 	byte temp; // extra memory used for calculations only
 
 	switch(mode) {
@@ -63,10 +62,10 @@ void emu6502::execute() {
 		memory = read(reg_PC + 1); // temporary
 	}
 
-	switch(instr) {
+	switch(opcode) {
 		// decode instruction and execute accordingly
 	default:
-		printf("ERROR: Unknown operand at address %d", reg_PC);
+		printf("ERROR: Unknown operand at address %d\n", reg_PC);
 		end();
 	}
 }
@@ -83,7 +82,7 @@ byte emu6502::read(address addr) {
 	if(addr < 0x10000)
 		return ram->PRG_ROM_BANK_2[addr];
 
-	printf("ERROR: Read attempt at address %d out of range", addr);
+	printf("ERROR: Read attempt at address %d out of range\n", addr);
 	end();
 
 	return 0x00;
@@ -101,15 +100,15 @@ void emu6502::write(address addr, byte data) {
 	if(addr < 0x10000)
 		ram->PRG_ROM_BANK_2[addr] = data;
 
-	printf("ERROR: Write attempt at address %d out of range", addr);
+	printf("ERROR: Write attempt at address %d out of range\n", addr);
 	end();
 }
 
-Mode emu6502::get_mode(Instruction instr) {
+Mode emu6502::get_mode(Opcode instr) {
 	// Get the addressing mode for the given instruction
 	switch(instr) {
 	default:
-		return Mode::TEMP;
+		return MODE_TEMP;
 	}
 }
 

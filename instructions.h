@@ -1,10 +1,7 @@
 #pragma once
 
-enum Instruction : uint8_t {
-	// Put all opcodes into here for decoding.
-};
+typedef int8_t Opcode;
+#define OPCODE_TEMP 0x00
 
-enum Mode : uint8_t {
-	// addressing modes (immediate, relative, etc.)
-	TEMP = 0x00
-};
+typedef int8_t Mode;
+#define MODE_TEMP 0x00

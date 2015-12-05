@@ -42,7 +42,7 @@ struct emu6502 {
 	void execute();
 	byte read(address);
 	void write(address, byte);
-	Mode get_mode(Instruction);
+	Mode get_mode(Opcode);
 
 	void end();
 };
