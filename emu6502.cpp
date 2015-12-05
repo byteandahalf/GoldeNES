@@ -95,17 +95,18 @@ byte emu6502::read(address addr) {
 void emu6502::write(address addr, byte data) {
 	if(addr < 0x2000)
 		ram->MEM[addr] = data;
-	if(addr < 0x4020)
+	else if(addr < 0x4020)
 		ram->MEMORY_MAPPED_IO[addr] = data;
-	if(addr < 0x8000)
+	else if(addr < 0x8000)
 		ram->MIRROR[addr] = data;
-	if(addr < 0xC000)
+	else if(addr < 0xC000)
 		ram->PRG_ROM_BANK_1[addr] = data;
-	if(addr < 0x10000)
+	else if(addr < 0x10000)
 		ram->PRG_ROM_BANK_2[addr] = data;
-
-	printf("ERROR: Write attempt at address %d out of range\n", addr);
-	end();
+	else {
+		printf("ERROR: Write attempt at address %d out of range\n", addr);
+		end();
+	}
 }
 
 Mode emu6502::get_mode(Opcode instr) {
