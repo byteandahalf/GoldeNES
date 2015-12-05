@@ -1,9 +1,14 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "emu6502.h"
 
 
 // RAM
+
+int emu6502::RAM::SIZE = 0x10000;
+short emu6502::RAM::MAX_ADDRESS = 0xFFFF;
+byte emu6502::RAM::ZERO_PAGE_LEN = 0xFF; // Zero Page is 0x00 - 0xFF
 
 emu6502::RAM::RAM() {
 	memset(MEM, 0x00, 0x2000);
@@ -35,7 +40,7 @@ emu6502::emu6502(void* program) {
 }
 
 emu6502::~emu6502() {
-	delete RAM;
+	ram.release();
 }
 
 void emu6502::end() {
@@ -46,9 +51,10 @@ void emu6502::execute() {
 	// execute next instruction
 
 	++reg_PC; // this is probably wrong, temporary for now
-	Instruction instr = read(reg_PC);
+	byte instr = read(reg_PC);
 	byte memory;
-	Mode mode = get_mode(instr);
+	//Mode mode = get_mode(instr);
+	byte mode = 0x00;
 	byte temp; // extra memory used for calculations only
 
 	switch(mode) {
@@ -93,7 +99,7 @@ void emu6502::write(address addr, byte data) {
 	if(addr < 0xC000)
 		ram->PRG_ROM_BANK_1[addr] = data;
 	if(addr < 0x10000)
-		ram->PRG_ROM_BANK_2[addr] = data
+		ram->PRG_ROM_BANK_2[addr] = data;
 
 	printf("ERROR: Write attempt at address %d out of range", addr);
 	end();
