@@ -2,7 +2,7 @@
 #include <memory>
 #include <stdint.h>
 
-#include "instructions.h"
+#include "opcodes.h"
 
 typedef int8_t byte;
 typedef int16_t address; // The 6502 has a 16-bit address bus, so addresses are only 2 bytes
