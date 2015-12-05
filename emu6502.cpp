@@ -8,7 +8,7 @@
 
 int emu6502::RAM::SIZE = 0x10000;
 short emu6502::RAM::MAX_ADDRESS = 0xFFFF;
-byte emu6502::RAM::ZERO_PAGE_LEN = 0xFF; // Zero Page is 0x00 - 0xFF
+byte emu6502::RAM::ZERO_PAGE_LEN = 0x100; // Zero Page is 0x00 - 0xFF
 
 emu6502::RAM::RAM() {
 	memset(MEM, 0x00, 0x2000);
