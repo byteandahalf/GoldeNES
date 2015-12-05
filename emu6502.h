@@ -44,5 +44,6 @@ struct emu6502 {
 	void write(address, byte);
 	Mode get_mode(Opcode);
 
+	void reset();
 	void end();
 };

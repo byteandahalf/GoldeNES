@@ -31,16 +31,20 @@ emu6502::emu6502(void* program) {
 	ram = std::unique_ptr<emu6502::RAM>(new emu6502::RAM());
 	ram->init(program);
 
-	reg_PC = 0x0000; // TODO: Load the reset address from 0xFFFC
+	reset();
+}
+
+emu6502::~emu6502() {
+	ram.release();
+}
+
+void emu6502::reset() {
+	reg_PC = read(0xFFFC); // 0xFFFC holds the reset address
 	reg_A = reg_X = reg_Y = 0x00;
 	reg_SP = 0xFF;
 	reg_ST = 0x00;
 
 	is_done = false;
-}
-
-emu6502::~emu6502() {
-	ram.release();
 }
 
 void emu6502::end() {
