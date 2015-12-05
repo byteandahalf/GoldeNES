@@ -24,7 +24,6 @@ struct emu6502 {
 		byte PRG_ROM_BANK_2[0x4000]; // 0xC000 - 0xFFFF
 
 		RAM();
-		~RAM();
 
 		void init(void*);
 	};

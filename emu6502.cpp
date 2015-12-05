@@ -13,15 +13,6 @@ emu6502::RAM::RAM() {
 	memset(PRG_ROM_BANK_2, 0x00, 0x4000);
 }
 
-
-emu6502::RAM::~RAM() {
-	delete[] MEM;
-	delete[] MEMORY_MAPPED_IO;
-	delete[] MIRROR;
-	delete[] PRG_ROM_BANK_1;
-	delete[] PRG_ROM_BANK_2;
-}
-
 void emu6502::RAM::init(void* program) {
 	// Copy the contents of the loaded program's PRG ROM into RAM
 }
