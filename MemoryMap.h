@@ -1,7 +1,7 @@
 #pragma once
 
 #include "types.h"
-struct emu2803;
+struct emu2A03;
 
 #define MEMORY_SIZE			0x10000
 #define NUMBER_OF_SECTIONS	0xB
