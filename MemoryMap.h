@@ -28,7 +28,7 @@ struct MemoryMap {
 
 
 	MemoryMap(emu2A03*);
-	void load_program(void*);
+	void load_program(byte*);
 
 	uint16_t swap_endian(address);
 

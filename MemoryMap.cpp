@@ -37,7 +37,7 @@ MemoryMap::MemoryMap(emu2A03* cpu) {
 	memset(PRG_ROM_BANK2, 0x00, 0x4000);
 }
 
-void MemoryMap::load_program(void* program) {
+void MemoryMap::load_program(byte* program) {
 	// Copy the contents of the loaded program's PRG ROM into memory
 }
 

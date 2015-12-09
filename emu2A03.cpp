@@ -8,7 +8,7 @@
 
 emu2A03* emu2A03::CPU = nullptr;
 
-emu2A03::emu2A03(void* program) {
+emu2A03::emu2A03(byte* program) {
 	memory_map = std::unique_ptr<MemoryMap>(new MemoryMap(this));
 	memory_map->load_program(program);
 
@@ -23,7 +23,7 @@ void emu2A03::reset() {
 	reg_PC = memory_map->read16(0xFFFC); // 0xFFFC holds the reset address
 	reg_A = reg_X = reg_Y = 0x00;
 	reg_SP = 0x1FF; // set to the top of the stack
-	reg_ST = 0x00;
+	reg_ST = status_register();
 
 	is_done = false;
 }

@@ -10,12 +10,13 @@ struct emu2A03 {
 
 	std::unique_ptr<MemoryMap> memory_map;
 
-	reg reg_A, reg_X, reg_Y, reg_ST;
+	reg reg_A, reg_X, reg_Y;
 	address reg_SP, reg_PC;
+	status_register reg_ST;
 
 	bool is_done; // end the program in case of exception
 
-	emu2A03(void*);
+	emu2A03(byte*);
 	~emu2A03();
 
 	void execute();
