@@ -5,18 +5,18 @@
 #include "types.h"
 struct MemoryMap;
 
-struct emu6502 {
-	static emu6502* CPU;
+struct emu2A03 {
+	static emu2A03* CPU;
 
 	std::unique_ptr<MemoryMap> memory_map;
 
-	reg reg_A, reg_X, reg_Y, reg_SP, reg_ST;
-	address reg_PC;
+	reg reg_A, reg_X, reg_Y, reg_ST;
+	address reg_SP, reg_PC;
 
 	bool is_done; // end the program in case of exception
 
-	emu6502(void*);
-	~emu6502();
+	emu2A03(void*);
+	~emu2A03();
 
 	void execute();
 	Mode get_mode(Opcode);

@@ -1,7 +1,7 @@
-# sixtyfiveohtwo
+# twoaohthree
 
-An emulator for the 6502 processor(used in the NES among other things) from 1975, written in C++.
+An emulator for the 2A03 processor(the NES variant of the 6502) from 1980, written in C++.
 
 ## Building
 
-`g++ -std=c++11 -o emu6502.exe emu6502.cpp MemoryMap.cpp`
+`g++ -std=c++11 -o emu2A03.exe emu2A03.cpp MemoryMap.cpp`

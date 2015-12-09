@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "emu6502.h"
+#include "emu2A03.h"
 #include "MemoryMap.h"
 
-MemoryMap::MemoryMap(emu6502* cpu) {
+MemoryMap::MemoryMap(emu2A03* cpu) {
 	this->cpu = cpu;
 
 	// RAM
@@ -41,7 +41,11 @@ void MemoryMap::load_program(void* program) {
 	// Copy the contents of the loaded program's PRG ROM into memory
 }
 
-byte MemoryMap::read(address addr) {
+uint16_t MemoryMap::swap_endian(address addr) {
+	return ((addr & 0xFF) << 8) + ((addr & 0xFF00) >> 8);
+}
+
+byte MemoryMap::read8(address addr) {
 	if(addr < 0x100) {
 		return ZERO_PAGE[addr];
 	}
@@ -80,6 +84,10 @@ byte MemoryMap::read(address addr) {
 		cpu->end();
 		return 0x00;
 	}
+}
+
+uint16_t MemoryMap::read16(address addr) {
+	return (read8(addr + 1) << 8) + read8(addr);
 }
 
 void MemoryMap::write(address addr, byte data) {
