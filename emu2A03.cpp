@@ -16,7 +16,7 @@ emu2A03::emu2A03(void* program) {
 }
 
 emu2A03::~emu2A03() {
-	memory_map.release();
+	delete memory_map.release();
 }
 
 void emu2A03::reset() {
