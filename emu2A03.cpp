@@ -20,7 +20,7 @@ emu2A03::~emu2A03() {
 }
 
 void emu2A03::reset() {
-	reg_PC = memory_map->read16(0xFFFC); // 0xFFFC holds the reset address
+	reg_PC = memory_map->readAddrLE(0xFFFC); // 0xFFFC holds the reset address
 	reg_A = reg_X = reg_Y = 0x00;
 	reg_SP = 0x1FF; // set to the top of the stack
 	reg_ST = status_register();
@@ -59,22 +59,22 @@ void emu2A03::execute() {
 		break;
 
 	case MODE_ABSOLUTE:
-		operand_addr = memory_map->read16(reg_PC + 1);
+		operand_addr = memory_map->readAddrLE(reg_PC + 1);
 		reg_PC += 3;
 		break;
 
 	case MODE_ABSOLUTE_X:
-		operand_addr = memory_map->read16(reg_PC + 1) + reg_X;
+		operand_addr = memory_map->readAddrLE(reg_PC + 1) + reg_X;
 		reg_PC += 3;
 		break;
 
 	case MODE_ABSOLUTE_Y:
-		operand_addr = memory_map->read16(reg_PC + 1) + reg_Y;
+		operand_addr = memory_map->readAddrLE(reg_PC + 1) + reg_Y;
 		reg_PC += 3;
 		break;
 
 	case MODE_INDIRECT:
-		operand_addr = memory_map->read16(memory_map->read16(reg_PC + 1));
+		operand_addr = memory_map->readAddrLE(memory_map->readAddrLE(reg_PC + 1));
 		reg_PC += 3;
 		break;
 
@@ -98,12 +98,12 @@ void emu2A03::execute() {
 		break;
 
 	case MODE_PREINDEXED:
-		operand_addr = memory_map->read16(memory_map->read8(reg_PC + 1) + reg_X);
+		operand_addr = memory_map->readAddrLE(memory_map->read8(reg_PC + 1) + reg_X);
 		reg_PC += 2;
 		break;
 
 	case MODE_POSTINDEXED:
-		operand_addr = memory_map->read16(memory_map->read8(reg_PC + 1)) + reg_Y;
+		operand_addr = memory_map->readAddrLE(memory_map->read8(reg_PC + 1)) + reg_Y;
 		reg_PC += 2;
 		break;
 

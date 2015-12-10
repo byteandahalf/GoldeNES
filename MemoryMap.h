@@ -34,6 +34,7 @@ struct MemoryMap {
 
 	byte read8(address);
 	uint16_t read16(address);
+	address readAddrLE(address);
 	byte read_from_io_ppu(address);
 	byte read_from_io_controller(address);
 

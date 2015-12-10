@@ -42,7 +42,7 @@ void MemoryMap::load_program(byte* program) {
 }
 
 uint16_t MemoryMap::swap_endian(address addr) {
-	return ((addr & 0xFF) << 8) + ((addr & 0xFF00) >> 8);
+	return ((addr & 0xFF) << 8) | ((addr & 0xFF00) >> 8);
 }
 
 byte MemoryMap::read8(address addr) {
@@ -87,7 +87,11 @@ byte MemoryMap::read8(address addr) {
 }
 
 uint16_t MemoryMap::read16(address addr) {
-	return (read8(addr + 1) << 8) + read8(addr);
+	return (read8(addr) << 8) | (read8(addr + 1));
+}
+
+address MemoryMap::readAddrLE(address addr) { // reads an address in little endian order
+	return swap_endian(read16(addr));
 }
 
 void MemoryMap::write(address addr, byte data) {
