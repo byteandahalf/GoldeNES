@@ -173,6 +173,8 @@ int main() {
         SFMLRenderer::gRenderer->tick();
 	}
 
+    delete emu2A03::CPU;
+    delete SFMLRenderer::gRenderer;
 	printf("%s \n", "Ending the process...");
 	return 0;
 }

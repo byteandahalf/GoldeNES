@@ -26,10 +26,12 @@ private:
 
 public:
     Window* pushWindow(int2, const std::string&);
-    void popWindow(); // pops last window from windows
+    Window* popWindow(); // pops last window from windows
     Window* getWindow(int);
+    const int numberOfWindows();
 
     SFMLRenderer();
+    ~SFMLRenderer();
 
     void tick();
 };

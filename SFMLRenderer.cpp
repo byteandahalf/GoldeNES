@@ -28,16 +28,30 @@ SFMLRenderer::SFMLRenderer() {
     pushWindow({400, 400}, "emu2A03"); // main window
 }
 
+SFMLRenderer::~SFMLRenderer() {
+    printf("%d\n", numberOfWindows());
+    for(int i = 0; i < numberOfWindows(); i++)
+        delete popWindow();
+
+    printf("%d\n", numberOfWindows());
+}
+
 SFMLRenderer::Window* SFMLRenderer::pushWindow(int2 size, const std::string& label) {
     windows.push_back(new SFMLRenderer::Window(size, label));
     return windows.back();
 }
 
-void SFMLRenderer::popWindow() {
+SFMLRenderer::Window* SFMLRenderer::popWindow() {
     if(!windows.empty())
     {
+        SFMLRenderer::Window* win = windows.back();
         windows.pop_back();
+        return win;
     }
+}
+
+const int SFMLRenderer::numberOfWindows() {
+    return windows.size();
 }
 
 SFMLRenderer::Window* SFMLRenderer::getWindow(int index) {
