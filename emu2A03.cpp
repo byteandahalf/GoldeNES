@@ -2,6 +2,7 @@
 
 #include "emu2A03.h"
 #include "MemoryMap.h"
+#include "SFMLRenderer.h"
 
 
 // CPU
@@ -159,14 +160,19 @@ Mode emu2A03::get_mode(Opcode instr) {
 
 int main() {
 	emu2A03::CPU = new emu2A03(nullptr);
-	printf("%s \n", "Welcome to Byteandahalf's horrible 2A03 emulator!");
+	SFMLRenderer::gRenderer = new SFMLRenderer();
 
-	while(true) {
+	printf("%s \n", "Booting up...");
+
+	while(true)
+	{
 		if(emu2A03::CPU->is_done)
 			break;
 
 		emu2A03::CPU->execute();
+        SFMLRenderer::gRenderer->tick();
 	}
 
-	printf("%s \n", "The program seems to have crashed!");
+	printf("%s \n", "Ending the process...");
+	return 0;
 }

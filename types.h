@@ -6,6 +6,10 @@ typedef int8_t byte;
 typedef int16_t address; // The 6502 has a 16-bit address bus, so addresses are only 2 bytes
 typedef byte reg;
 
+struct int2 {
+    int x, y;
+};
+
 // status flags
 #define STATUS_CARRY 0
 #define STATUS_ZERO 1

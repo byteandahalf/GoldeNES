@@ -1,3 +1,5 @@
-build.bat
-run.bat
-emu2A03.exe
+/bin
+/obj
+twoaohthree.cbp
+twoaohthree.depend
+twoaohthree.layout
