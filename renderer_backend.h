@@ -16,8 +16,6 @@ public:
     renderer(int, int);
     ~renderer();
 
-    void setInitialWindow();
-
     sf::RenderWindow* getMainWindow();
 
     inline Color* getPixels();
