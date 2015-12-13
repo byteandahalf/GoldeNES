@@ -2,7 +2,7 @@
 
 #include "emu2A03.h"
 #include "MemoryMap.h"
-#include "SFMLRenderer.h"
+#include "renderer_backend.h"
 
 
 // CPU
@@ -20,17 +20,21 @@ emu2A03::~emu2A03() {
 	delete memory_map.release();
 }
 
+void emu2A03::close() {
+    delete this;
+}
+
 void emu2A03::reset() {
 	reg_PC = memory_map->readAddrLE(0xFFFC); // 0xFFFC holds the reset address
 	reg_A = reg_X = reg_Y = 0x00;
 	reg_SP = 0x1FF; // set to the top of the stack
 	reg_ST = status_register();
 
-	is_done = false;
+	close_requested = false;
 }
 
 void emu2A03::end() {
-	is_done = true;
+	close_requested = true;
 }
 
 void emu2A03::execute() {
@@ -160,21 +164,19 @@ Mode emu2A03::get_mode(Opcode instr) {
 
 int main() {
 	emu2A03::CPU = new emu2A03(nullptr);
-	SFMLRenderer::gRenderer = new SFMLRenderer();
+	renderer::backend = new renderer(640, 480);
 
 	printf("%s \n", "Booting up...");
 
-	while(true)
+	while(renderer::backend->getMainWindow()->isOpen() && !emu2A03::CPU->close_requested)
 	{
-		if(emu2A03::CPU->is_done)
-			break;
-
 		emu2A03::CPU->execute();
-        SFMLRenderer::gRenderer->tick();
+        renderer::backend->tick();
 	}
 
-    delete emu2A03::CPU;
-    delete SFMLRenderer::gRenderer;
+    emu2A03::CPU->close();
+	renderer::backend->close();
+
 	printf("%s \n", "Ending the process...");
 	return 0;
 }

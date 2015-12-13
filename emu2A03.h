@@ -14,10 +14,11 @@ struct emu2A03 {
 	address reg_SP, reg_PC;
 	status_register reg_ST;
 
-	bool is_done; // end the program in case of exception
+	bool close_requested;
 
 	emu2A03(byte*);
 	~emu2A03();
+	void close();
 
 	void execute();
 	Mode get_mode(Opcode);
