@@ -1,7 +1,9 @@
 #pragma once
 
+#include "types.h"
+
 struct Color {
-    int r, g, b, a;
+    byte r, g, b, a;
 
     static Color RED;
     static Color ORANGE;
