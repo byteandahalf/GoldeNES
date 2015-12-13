@@ -34,7 +34,7 @@ void emu2A03::reset() {
 }
 
 void emu2A03::end() {
-	close_requested = true;
+	//close_requested = true;
 }
 
 void emu2A03::execute() {

@@ -2,6 +2,17 @@
 
 #include "renderer_backend.h"
 
+// Colors
+Color Color::RED{0xFF, 0x00, 0x00, 0xFF};
+Color Color::ORANGE{0xFF, 0xA5, 0x00, 0xFF};
+Color Color::YELLOW{0xFF, 0xFF, 0x00, 0xFF};
+Color Color::GREEN{0x00, 0xFF, 0x00, 0xFF};
+Color Color::BLUE{0x00, 0x00, 0xFF, 0xFF};
+Color Color::PURPLE{0x80, 0x00, 0x80, 0xFF};
+Color Color::BLACK{0xFF, 0xFF, 0xFF, 0xFF};
+Color Color::WHITE{0x00, 0x00, 0x00, 0xFF};
+
+
 renderer* renderer::backend = nullptr;
 const std::string renderer::MAIN_WINDOW_LABEL = "GoldeNES";
 
@@ -9,11 +20,10 @@ renderer::renderer(int width, int height):
     ticks(0),
     main_window(new sf::RenderWindow(sf::VideoMode(width, height), renderer::MAIN_WINDOW_LABEL)) {
 
-    pixels = new sf::Color[width * height];
+    pixels = new Color[width * height];
 
     canvas.create(width, height);
     screen.setTexture(canvas);
-
 }
 
 renderer::~renderer() {
@@ -25,15 +35,15 @@ sf::RenderWindow* renderer::getMainWindow() {
     return main_window.get();
 }
 
-sf::Color* renderer::getPixels() {
+Color* renderer::getPixels() {
     return pixels;
 }
 
-void renderer::setPixel(int x, int y, const sf::Color& color) {
+void renderer::setPixel(int x, int y, const Color& color) {
     pixels[x + (y * main_window->getSize().x)] = color;
 }
 
-const sf::Color& renderer::getPixel(int x, int y) {
+const Color& renderer::getPixel(int x, int y) {
     return pixels[x + (y * main_window->getSize().x)];
 }
 

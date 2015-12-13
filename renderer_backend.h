@@ -6,6 +6,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "types.h"
+#include "colors.h"
 
 class renderer {
 public:
@@ -19,9 +20,9 @@ public:
 
     sf::RenderWindow* getMainWindow();
 
-    inline sf::Color* getPixels();
-    inline void setPixel(int, int, const sf::Color&);
-    inline const sf::Color& getPixel(int, int);
+    inline Color* getPixels();
+    inline void setPixel(int, int, const Color&);
+    inline const Color& getPixel(int, int);
 
     const int screenSize();
 
@@ -35,5 +36,5 @@ private:
     std::unique_ptr<sf::RenderWindow> main_window;
     sf::Texture canvas;
     sf::Sprite screen;
-    sf::Color* pixels;
+    Color* pixels;
 };
