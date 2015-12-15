@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "emu2A03.h"
-#include "MemoryMap.h"
+#include "emulator.h"
+#include "cpu.h"
+#include "memory.h"
 
-MemoryMap::MemoryMap(emu2A03* cpu) {
-	this->cpu = cpu;
-
+MemoryMap::MemoryMap() {
 	// RAM
 	ZERO_PAGE = new byte[0x100];
 	STACK = new byte[0x100];
@@ -81,7 +80,7 @@ byte MemoryMap::read8(address addr) {
 	}
 	else {
 		printf("ERROR: Attempting to read from out-of-range address %d.", addr);
-		cpu->end();
+		Emulator::CPU->end();
 		return 0x00;
 	}
 }
@@ -130,7 +129,7 @@ void MemoryMap::write(address addr, byte data) {
 	}
 	else {
 		printf("ERROR: Attempting to write to out-of-range address %d.", addr);
-		cpu->end();
+		Emulator::CPU->end();
 	}
 }
 

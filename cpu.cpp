@@ -1,30 +1,26 @@
 #include <stdio.h>
 
-#include "emu2A03.h"
-#include "MemoryMap.h"
+#include "cpu.h"
+#include "memory.h"
 #include "renderer_backend.h"
 
 
-// CPU
-
-emu2A03* emu2A03::CPU = nullptr;
-
-emu2A03::emu2A03(byte* program) {
-	memory_map = std::unique_ptr<MemoryMap>(new MemoryMap(this));
+Processor::Processor(byte* program) {
+	memory_map = std::unique_ptr<MemoryMap>(new MemoryMap());
 	memory_map->load_program(program);
 
 	reset();
 }
 
-emu2A03::~emu2A03() {
+Processor::~Processor() {
 	delete memory_map.release();
 }
 
-void emu2A03::close() {
+void Processor::close() {
     delete this;
 }
 
-void emu2A03::reset() {
+void Processor::reset() {
 	reg_PC = memory_map->readAddrLE(0xFFFC); // 0xFFFC holds the reset address
 	reg_A = reg_X = reg_Y = 0x00;
 	reg_SP = 0x1FF; // set to the top of the stack
@@ -33,11 +29,11 @@ void emu2A03::reset() {
 	close_requested = false;
 }
 
-void emu2A03::end() {
+void Processor::end() {
 	//close_requested = true;
 }
 
-void emu2A03::execute() {
+void Processor::execute() {
 	// execute next instruction
 
 	Opcode opcode = memory_map->read8(reg_PC);
@@ -125,7 +121,7 @@ void emu2A03::execute() {
 	}
 }
 
-Mode emu2A03::get_mode(Opcode instr) {
+Mode Processor::get_mode(Opcode instr) {
 	// Get the addressing mode for the given instruction
 	switch(instr) {
 	case 0x69: case 0x29: case 0xC9: case 0xE0: case 0xC0: case 0x49: case 0xA9: case 0xA2: case 0xA0: case 0x09: case 0xE9:
@@ -157,26 +153,4 @@ Mode emu2A03::get_mode(Opcode instr) {
 	default:
 		return 0x0D;
 	}
-}
-
-
-// main loop
-
-int main() {
-	emu2A03::CPU = new emu2A03(nullptr);
-	renderer::backend = new renderer(640, 480);
-
-	printf("%s \n", "Booting up...");
-
-	while(renderer::backend->getMainWindow()->isOpen() && !emu2A03::CPU->close_requested)
-	{
-		emu2A03::CPU->execute();
-        renderer::backend->tick();
-	}
-
-    emu2A03::CPU->close();
-	renderer::backend->close();
-
-	printf("%s \n", "Ending the process...");
-	return 0;
 }

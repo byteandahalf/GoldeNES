@@ -5,9 +5,7 @@
 #include "types.h"
 struct MemoryMap;
 
-struct emu2A03 {
-	static emu2A03* CPU;
-
+struct Processor {
 	std::unique_ptr<MemoryMap> memory_map;
 
 	reg reg_A, reg_X, reg_Y;
@@ -16,8 +14,8 @@ struct emu2A03 {
 
 	bool close_requested;
 
-	emu2A03(byte*);
-	~emu2A03();
+	Processor(byte*);
+	~Processor();
 	void close();
 
 	void execute();

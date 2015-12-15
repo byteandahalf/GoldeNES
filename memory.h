@@ -1,14 +1,11 @@
 #pragma once
 
 #include "types.h"
-struct emu2A03;
 
 #define MEMORY_SIZE		0x10000
 #define NUMBER_OF_PAGES		0xB
 
 struct MemoryMap {
-	emu2A03* cpu;
-
 	// RAM
 	byte* ZERO_PAGE;	// 0x0000 - 0x00FF
 	byte* STACK;		// 0x0100 - 0x01FF
@@ -27,7 +24,7 @@ struct MemoryMap {
 	byte* PRG_ROM_BANK2;	// 0xC000 - 0xFFFF
 
 
-	MemoryMap(emu2A03*);
+	MemoryMap();
 	void load_program(byte*);
 
 	uint16_t swap_endian(address);

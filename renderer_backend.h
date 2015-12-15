@@ -8,13 +8,15 @@
 #include "types.h"
 #include "colors.h"
 
-class renderer {
+class Renderer {
 public:
-    static renderer* backend;
+    static const int WIDTH;
+    static const int HEIGHT;
+    static const int SCALE;
     static const std::string MAIN_WINDOW_LABEL;
 
-    renderer(int, int);
-    ~renderer();
+    Renderer();
+    ~Renderer();
 
     sf::RenderWindow* getMainWindow();
 
