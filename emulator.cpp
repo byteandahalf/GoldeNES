@@ -16,10 +16,10 @@ int main() {
 	while(Emulator::renderer->getMainWindow()->isOpen() && !Emulator::CPU->close_requested)
 	{
 		Emulator::CPU->execute();
-        Emulator::renderer->tick();
+		Emulator::renderer->tick();
 	}
 
-    Emulator::CPU->close();
+	Emulator::CPU->close();
 	Emulator::renderer->close();
 
 	printf("%s \n", "Ending the process...");
